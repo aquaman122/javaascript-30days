@@ -42,7 +42,7 @@
       background:linear-gradient(to bottom,#eee 0%,#fff 100%)
     }
 
-    ul .white:active {
+    ul .whitePlaying {
       border-top:1px solid #777;
       border-left:1px solid #999;
       border-bottom:1px solid #999;
@@ -61,7 +61,7 @@
       background:linear-gradient(45deg,#222 0%,#555 100%)
     }
 
-    .black:active {
+    .blackPlaying {
       box-shadow:-1px -1px 2px rgba(255,255,255,0.2) inset,0 -2px 2px 3px rgba(0,0,0,0.6) inset,0 1px 2px rgba(0,0,0,0.5);
       background:linear-gradient(to right,#444 0%,#222 100%)
     }
@@ -82,19 +82,19 @@
 </head>
 <body>
   <ul class="set">
-    <li data-key="65" class="key white b"></li>
-    <li data-key="87" class="key black as"></li>
-    <li data-key="83" class="key white a"></li>
-    <li data-key="69" class="key black gs"></li>
-    <li data-key="68" class="key white g"></li>
-    <li data-key="82" class="key black fs"></li>
-    <li data-key="70" class="key white f"></li>
-    <li data-key="71" class="key white e"></li>
-      <li data-key="84" class="key black ds"></li>
-      <li data-key="72" class="key white d"></li>
-      <li data-key="89" class="key black cs"></li>
-      <li data-key="74" class="key white c"></li>
-      <li data-key="75" class="key white d"></li>
+    <li data-key="65" class="white b"></li>
+    <li data-key="87" class="black as"></li>
+    <li data-key="83" class="white a"></li>
+    <li data-key="69" class="black gs"></li>
+    <li data-key="68" class="white g"></li>
+    <li data-key="82" class="black fs"></li>
+    <li data-key="70" class="white f"></li>
+    <li data-key="71" class="white e"></li>
+      <li data-key="84" class="black ds"></li>
+      <li data-key="72" class="white d"></li>
+      <li data-key="89" class="black cs"></li>
+      <li data-key="74" class="white c"></li>
+      <li data-key="75" class="white d"></li>
   </ul>
 
   <audio data-key="65" src="./audio/FX_piano01.mp3"></audio>
@@ -114,25 +114,29 @@
   <script>
     const playingSound = e => {
       const $audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-      const $key = document.querySelector(`li[date-key="${e.keyCode}"]`);
+      const $key = document.querySelector(`li[data-key="${e.keyCode}"]`);
       if ($audio) {
         $audio.currentTime = 0;
         $audio.play();
-        console.log(e);
+        if (e.keyCode === 87 || e.keyCode === 69 || e.keyCode === 82 || e.keyCode === 84 || e.keyCode === 89) {
+          $key.classList.add('blackPlaying');
+        } else {
+          $key.classList.add('whitePlaying');
+        }
       }
     }
     
-    const removeTransition = e => {
-      if (e.propertyName === 'transform') {
-        e.target.classList.remove('playing');
-      }
+    const removeSound = e => {
+      const $audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+      const $key = document.querySelector(`li[data-key="${e.keyCode}"]`);
+      if (e.keyCode === 87 || e.keyCode === 69 || e.keyCode === 82 || e.keyCode === 84 || e.keyCode === 89) {
+          $key.classList.remove('blackPlaying');
+        } else {
+          $key.classList.remove('whitePlaying');
+        }
     }
     window.addEventListener('keydown', playingSound);
-
-    const pianoElList = document.querySelectorAll('li');
-    pianoElList.forEach((el) => {
-      el.addEventListener('transitionend', removeTransition);
-    })
+    window.addEventListener('keyup', removeSound);
   </script>
 </body>
 </html>
