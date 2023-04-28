@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h2>Update CSS Variables with JS</h2>
+
+  <div class="contrals">
+    <label for="spacing">Spacing</label>
+    <input type="range" name="spacing" min="10" max="200" value="10" data-sizing="px"/>
+
+    <label for="blur">Blur</label>
+    <input type="range" name="Blur" min="0" max="25" value="10" data-sizing="px"/>
+
+    <label for="spacing">Base Color</label>
+    <input type="color" name="base" value="#ffc600">
+  </div>
+
+  <img src="./cityImg1.jpeg" alt="">
+
+  <style>
+    :root {
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(--blur);
+    }
+
+    body {
+      text-align: center;
+    }
+
+    body {
+      background: #193549;
+      color: white;
+      font-family: 'helvetica neue', sans-serif;
+      font-weight: 100;
+      font-size: 50px;
+    }
+
+    .contrals {
+      margin-bottom: 50px;
+    }
+
+    label {
+      font-size: 20px;
+    }
+    input {
+      width: 100px;
+      height: 3px;
+      color: gray;
+    }
+
+    input:last-child {
+      width: 90px;
+      height: 30px;
+    }
+  </style>
+
+  <script>
+    const $inputs = document.querySelectorAll('input');
+    
+    const handleUpdate = (e) => {
+      const suffix = e.target.dataset.sizing || '';
+      document.documentElement.style.setProperty(`--${e.target.name}`, e.target.value + suffix);
+    }
+
+    $inputs.forEach((input) => {
+      input.addEventListener('change', handleUpdate);
+      input.addEventListener('mousemove', handleUpdate);
+    })
+  </script>
+</body>
+</html>
