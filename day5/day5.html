@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .panels {
+      /*Display*/
+      display: flex;
+      /*General properties*/
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .panel {
+      /*Display*/
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      /*General properties*/
+      color: var(--letter-color);
+      font-size: 50px;
+      box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.1);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      /*Transitions*/
+      transition: font-size 0.7s cubic-bezier(0.61, -0.19, 0.7, -0.11),
+        flex 0.7s cubic-bezier(0.61, -0.19, 0.7, -0.11), background 0.2s;
+    }
+
+    .panel > * {
+      width: 100%;
+      flex: 1 0 auto;
+      transition: transform 0.5s;
+      /*Display*/
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .panel > *:first-child {
+      transform: translateY(-100%);
+    }
+    /*Add class from JS to show text*/
+    .panel.open-active > *:first-child {
+      transform: translateY(0);
+    }
+    .panel > *:last-child {
+      transform: translateY(100%);
+    }
+    /*Add class from JS to show text*/
+    .panel.open-active > *:last-child {
+      transform: translateY(0);
+    }
+    /*Widen image and scale text*/
+    .panel.open {
+      flex: 4;
+      font-size: 50px;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="panels">
+    <div class="panel panel1">
+      <p>Hey</p>
+      <p>Let's</p>
+      <p>Dance</p>
+    </div>
+    <div class="panel panel2">
+      <p>Give</p>
+      <p>Take</p>
+      <p>Receive</p>
+    </div>
+    <div class="panel panel3">
+      <p>Experience</p>
+      <p>It</p>
+      <p>Today</p>
+    </div>
+    <div class="panel panel4">
+      <p>Give</p>
+      <p>All</p>
+      <p>You can</p>
+    </div>
+    <div class="panel panel5">
+      <p>Life</p>
+      <p>In</p>
+      <p>Motion</p>
+    </div>
+  </div>
+
+  <script>
+    const $panel = document.querySelectorAll('.panel');
+
+    function toggleOpen(e) {
+      e.target.classList.toggle("open");
+    }
+
+    function toggleActive(ev) {
+      if (ev.propertyName.includes("flex")) {
+        this.classList.toggle("open-active");
+      }
+    }
+    $panel.forEach((panel, i) => {
+      panel.style.backgroundImage = `url('images${i}.jpeg')`;
+    })
+    //Widen and stretch image
+    $panel.forEach((panel) => panel.addEventListener("click", toggleOpen));
+    //Show or hide text
+    $panel.forEach((panel) =>
+      panel.addEventListener("transitionend", toggleActive)
+);
+  </script>
+</body>
+</html>
