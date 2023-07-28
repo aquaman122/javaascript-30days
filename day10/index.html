@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    *,
+    *::before,
+    *::after {
+      -webkit-box-sizing: inherit;
+      box-sizing: inherit;
+      margin: 0;
+      padding: 0;
+    }
+    body{
+      background-image: url('../images/background.JPG');
+      width: 100%;
+      height: 100vh;
+      color: white;
+      background: rgb(255,217,25);
+      color: black;
+      font-family: 'Schoolbell', cursive;
+    }
+    .container {
+      height: 100%;
+      width: 100%;
+      display: grid;
+    }
+
+    .centerContainer {
+      align-self: center;
+      justify-self: center;
+      width: 400px;
+      height: 600px;
+      background: white;
+      box-shadow: 14px 14px 2px 0px rgba(0, 0, 0, 0.75);
+      display: grid;
+    }
+
+    .inputContainer {
+      display: grid;
+      grid-template-columns: 20% 80%;
+    }
+    .inputBox {
+      border-right: 1px solid lightblue;
+      border-bottom: 1px solid lightblue;
+      display: grid;
+    }
+    .textBox {
+      border-bottom: 1px solid lightblue;
+      display: grid;
+    }
+
+    p, input {
+      align-self: center;
+    }
+    p {
+      margin-left: 5%;
+      font-size: 24px;
+    }
+    input {
+      justify-self: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="centerContainer">
+      <div class="inputContainer"><div class="inputBox"><input type="checkbox"></div><div class="textBox"><p>This is an inbox layout.</p></div></div>
+      <div class="inputContainer"><div class="inputBox"><input type="checkbox"></div><div class="textBox"><p>Check one item</p></div></div>
+      <div class="inputContainer"><div class="inputBox"><input type="checkbox"></div><div class="textBox"><p>Hold down your Shift key</p></div></div>
+      <div class="inputContainer"><div class="inputBox"><input type="checkbox"></div><div class="textBox"><p>Check a lower item</p></div></div>
+      <div class="inputContainer"><div class="inputBox"><input type="checkbox"></div><div class="textBox"><p>Everything in between should also be set to checked</p></div></div>
+      <div class="inputContainer"><div class="inputBox"><input type="checkbox"></div><div class="textBox"><p>Try do it without any libraries</p></div></div>
+      <div class="inputContainer"><div class="inputBox"><input type="checkbox"></div><div class="textBox"><p>Just regular JavaScript</p></div></div>
+      <div class="inputContainer"><div class="inputBox"><input type="checkbox"></div><div class="textBox"><p>Good Luck!</p></div></div>
+      <div class="inputContainer"><div class="inputBox"><input type="checkbox"></div><div class="textBox"><p>Don't forget to tweet your result!</p></div></div>      
+    </div>
+</div>
+
+  <script>
+    const checkboxes = document.querySelectorAll('.inputBox input[type="checkbox"]');
+
+    let lastChecked;
+
+    function handleCheck(e) {
+      // check if they had the shift key down
+      let inBetween = false;
+      if(e.shiftKey && this.checked) {
+        // go ahead and do what we please
+        // loop oven every single checkbox
+        checkboxes.forEach(checkbox => {
+          if (checkbox === this || checkbox === lastChecked) {
+            inBetween = !inBetween;
+          }
+
+          if (inBetween) {
+            checkbox.checked = true;
+          }
+        })
+      }
+      lastChecked = this;
+      
+    }
+    
+    checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
+  </script>
+</body>
+</html>
